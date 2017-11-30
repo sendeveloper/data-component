@@ -13,10 +13,18 @@ class Header extends React.Component {
 }
 
 class Content extends React.Component {
-
    render() {
+      var status, diff1, diff2;
+      diff1 = ((this.props.year*12 + this.props.monthNum) - (this.props.state.startYear*12 + this.props.state.startMonth));
+      diff2 = ((this.props.state.endYear*12 + this.props.state.endMonth) - (this.props.year*12 + this.props.monthNum));
+      if (diff1 === 0 || diff2 === 0)
+        status = 1;
+      else if (diff1 > 0 && diff2 > 0)
+        status = 2;
+      else
+        status = 0;
       return (
-         <div className="monthNames col-sm-2" onClick={this.props.onClick}>
+         <div className={"monthNames col-sm-2 " + (status===2 ? 'selected' : (status===1 ? 'between': ''))} onClick={this.props.onClick}>
             {this.props.month}
          </div>
       );
@@ -29,14 +37,22 @@ class App extends Component {
           startYear: 0,
           startMonth: 0,
           endYear: 0,
-          endMonth: 0
+          endMonth: 0,
+          selectType: 0
       }
       this.onClick = this.onClick.bind(this)
    }
 
   onClick(year, month) {
-    console.log(year, month)
-    this.setState({startYear: year, startMonth: month});
+    if (this.state.selectType === 0){
+      this.setState({startYear: year, startMonth: month, endYear: year, endMonth: month, selectType: 1});
+    }
+    else{
+      if ((this.state.startYear * 12 + this.state.startMonth) >= (year*12 + month))
+        this.setState({startYear: year, startMonth: month, endYear: this.state.startYear, endMonth: this.state.startMonth, selectType: 0});
+      else
+        this.setState({endYear: year, endMonth: month, selectType: 0});
+    }
   }
 
   render() {
@@ -49,12 +65,16 @@ class App extends Component {
       {
         years.map((year) => {
           return (<div className="row" key = {year} >
-            <Header year = {year}/>  
+            <Header year = {year}/>
+            <div className="monthContainer">  
             {
               months.map((month, i) => 
-                <Content key = {i} month = {month} onClick={()=>this.onClick(year, month)}/>
+                <Content key = {i} month = {month} monthNum = {i+1} year = {year} state = {this.state}
+                    onClick={()=>this.onClick(year, i+1)} 
+                  />
               )
             }
+            </div>
             <div className="clear"></div>
           </div>)
         })
