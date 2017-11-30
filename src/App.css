@@ -3,32 +3,43 @@
 }
 .yearNames{
 	font-size: 25px;
-	color: #000;
+	color: #bfbfbf;
 }
 .monthContainer{
-	display: block;
+	width: 600px;
 }
 .monthNames{
+	border: solid 1px #bfbfbf;
+	margin: 0 -1px -1px 0;
+	float: left;
+	display: block;
+}
+.monthNames a{
+	cursor: pointer;
 	color: #bfbfbf;
 	background: #FFF;
 	height: 60px;
 	padding: 15px 0;
 	text-align: center;
 	font-size: 20px;
-	outline: 1px solid #bfbfbf;
-	cursor: pointer;
+	width: 99px;
+	transition: background-color 0.5s ease;
+	text-decoration: none;
+	display: block;
 }
-.monthNames:last-child{
-}
-.monthNames:hover{
-	border: 1px solid #89cacd;
+.monthNames a:hover{
+	border: solid 1px #89cacd;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    text-decoration: none;
 	color: #89cacd;
 }
-.monthNames.selected{
+.monthNames.selected a{
 	color: #bfbfbf;
 	background: #f0f0f0;
 }
-.monthNames.between{
+.monthNames.between a{
 	color: #FFF;
 	background: #89cacd;
 }

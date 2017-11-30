@@ -24,8 +24,8 @@ class Content extends React.Component {
       else
         status = 0;
       return (
-         <div className={"monthNames col-sm-2 " + (status===2 ? 'selected' : (status===1 ? 'between': ''))} onClick={this.props.onClick}>
-            {this.props.month}
+         <div className={"monthNames " + (status===2 ? 'selected' : (status===1 ? 'between': ''))} onClick={this.props.onClick}>
+            <a>{this.props.month}</a>
          </div>
       );
    }
